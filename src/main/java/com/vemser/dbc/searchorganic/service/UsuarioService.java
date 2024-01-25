@@ -2,11 +2,13 @@ package com.vemser.dbc.searchorganic.service;
 import com.vemser.dbc.searchorganic.exceptions.RegraDeNegocioException;
 import com.vemser.dbc.searchorganic.model.Usuario;
 import com.vemser.dbc.searchorganic.repository.UsuarioRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class UsuarioService {
 
     private UsuarioRepository usuarioRepository;
@@ -28,6 +30,7 @@ public class UsuarioService {
     }
 
     public List<Usuario> exibirTodos() throws Exception {
+        log.info("passou aqui");
          return usuarioRepository.listar();
     }
 
