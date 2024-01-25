@@ -22,6 +22,6 @@ public class OpenApiConfig {
                         .version("v1.0.0")
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
-                .servers(List.of(new Server().description("HTTPS Server")));
+                .servers(List.of(new Server().url("https://depp-production.up.railway.app/").description("HTTPS Server")));
     }
 }
