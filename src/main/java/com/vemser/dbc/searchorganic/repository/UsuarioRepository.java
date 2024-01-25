@@ -7,7 +7,6 @@ import com.vemser.dbc.searchorganic.model.Usuario;
 import com.vemser.dbc.searchorganic.service.EnderecoService;
 import com.vemser.dbc.searchorganic.utils.TipoAtivo;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@Slf4j
 @RequiredArgsConstructor
 public class UsuarioRepository implements IRepositoryJDBC<Integer, Usuario> {
     private final ConexaoBancoDeDados conexaoBancoDeDados;
@@ -157,7 +155,7 @@ public class UsuarioRepository implements IRepositoryJDBC<Integer, Usuario> {
 
 
     @Override
-    public boolean editar(Integer id, Usuario usuario) throws BancoDeDadosException {
+    public Boolean editar(Integer id, Usuario usuario) throws BancoDeDadosException {
         Connection con = null;
         try {
             con = conexaoBancoDeDados.getConnection();
@@ -212,7 +210,6 @@ public class UsuarioRepository implements IRepositoryJDBC<Integer, Usuario> {
         Connection con = null;
         try {
             con = conexaoBancoDeDados.getConnection();
-            log.info("cONECTOU NO BANCO");
             Statement stmt = con.createStatement();
 
             String sql = "SELECT * FROM Usuario";
@@ -234,8 +231,6 @@ public class UsuarioRepository implements IRepositoryJDBC<Integer, Usuario> {
                 usuarios.add(usuario);
             }
         } catch (SQLException e) {
-
-            log.info(e.getMessage());
             throw new BancoDeDadosException(e.getCause());
         } finally {
             try {
