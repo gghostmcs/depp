@@ -68,8 +68,9 @@ public class ConexaoBancoDeDados {
         log.info(PASS);
         log.info(SCHEMA);
         Connection con = DriverManager.getConnection(SERVER, USER, PASS);
+        log.info("conecou");
         con.createStatement().execute("alter session set current_schema=" + SCHEMA);
-
+        log.info("executou");
         return con;
     }
 
