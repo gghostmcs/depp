@@ -39,8 +39,8 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
             produto.setIdProduto(proximoId);
 
             String sql = "INSERT INTO PRODUTO\n" +
-                    "(ID_PRODUTO, ID_EMPRESA, NOME, DESCRICAO, PRECO, QUANTIDADE_DISPONIVEL, TIPO_CATEGORIA, TAXA, UNIDADE_MEDIDA)\n" +
-                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "(ID_PRODUTO, ID_EMPRESA, NOME, DESCRICAO, PRECO, QUANTIDADE_DISPONIVEL, TIPO_CATEGORIA, TAXA, UNIDADE_MEDIDA, URL_IMAGEM)\n" +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setInt(1, produto.getIdProduto());
@@ -52,7 +52,7 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
             stmt.setInt(7, produto.getCategoria().getValor());
             stmt.setDouble(8, produto.getTaxa());
             stmt.setString(9, produto.getUnidadeMedida().toString());
-
+            stmt.setString(10, produto.getUrlImagem());
             int res = stmt.executeUpdate();
             if (res > 0) {
                 System.out.println("produto adicionada");
@@ -109,7 +109,7 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
 
 
     @Override
-    public boolean editar(Integer id, Produto produto) throws BancoDeDadosException {
+    public Boolean editar(Integer id, Produto produto) throws BancoDeDadosException {
         Connection con = null;
         try {
             con = conexaoBancoDeDados.getConnection();
@@ -122,6 +122,7 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
                     " tipo_categoria = ?," +
                     " taxa = ?, " +
                     " unidade_medida = ? " +
+                    " url_imagem = ? " +
                     " WHERE id_produto = ? ";
 
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -133,7 +134,8 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
             stmt.setInt(5, produto.getCategoria().getValor());
             stmt.setDouble(6, produto.getTaxa());
             stmt.setString(7, produto.getUnidadeMedida().toString());
-            stmt.setInt(8, produto.getIdProduto());
+            stmt.setString(8, produto.getUrlImagem());
+            stmt.setInt(9, produto.getIdProduto());
             int res = stmt.executeUpdate();
 
             if (res > 0) {
@@ -177,6 +179,7 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
                 produto.setCategoria(TipoCategoria.fromInt(res.getInt("tipo_categoria")));
                 produto.setTaxa(res.getDouble("taxa"));
                 produto.setUnidadeMedida(UnidadeMedida.fromString(res.getString("unidade_medida")));
+                produto.setUrlImagem(res.getString("url_imagem"));
                 produtos.add(produto);
             }
         } catch (SQLException e) {
@@ -193,7 +196,7 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
         return produtos;
     }
 
-    public Produto buscarProdutoPorId(int id) throws BancoDeDadosException {
+    public Produto buscarProdutoPorId(Integer id) throws BancoDeDadosException {
         Connection con = null;
         try {
             con = conexaoBancoDeDados.getConnection();
@@ -214,6 +217,7 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
                 produto.setCategoria(TipoCategoria.fromInt(res.getInt("tipo_categoria")));
                 produto.setTaxa(res.getDouble("taxa"));
                 produto.setUnidadeMedida(UnidadeMedida.fromString(res.getString("unidade_medida")));
+                produto.setUrlImagem(res.getString("url_imagem"));
                 return produto;
             }
             return null;
@@ -230,7 +234,7 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
         }
     }
 
-    public List<Produto> listarProdutosPorCategoria(int categoria) throws BancoDeDadosException {
+    public List<Produto> listarProdutosPorCategoria(Integer categoria) throws BancoDeDadosException {
         List<Produto> produtos = new ArrayList<>();
         Connection con = null;
         try {
@@ -252,6 +256,7 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
                 produto.setCategoria(TipoCategoria.fromInt(res.getInt("tipo_categoria")));
                 produto.setTaxa(res.getDouble("taxa"));
                 produto.setUnidadeMedida(UnidadeMedida.fromString(res.getString("unidade_medida")));
+                produto.setUrlImagem(res.getString("url_imagem"));
                 produtos.add(produto);
             }
         } catch (SQLException e) {
@@ -268,7 +273,7 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
         return produtos;
     }
 
-    public List<Produto> listarProdutosLoja(int idLoja) throws BancoDeDadosException {
+    public List<Produto> listarProdutosLoja(Integer idLoja) throws BancoDeDadosException {
         List<Produto> produtos = new ArrayList<>();
         Connection con = null;
         try {
@@ -290,6 +295,7 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
                 produto.setCategoria(TipoCategoria.fromInt(res.getInt("tipo_categoria")));
                 produto.setTaxa(res.getDouble("taxa"));
                 produto.setUnidadeMedida(UnidadeMedida.fromString(res.getString("unidade_medida")));
+                produto.setUrlImagem(res.getString("url_imagem"));
                 produtos.add(produto);
             }
         } catch (SQLException e) {
@@ -304,5 +310,9 @@ public class ProdutoRepository implements IRepositoryJDBC<Integer, Produto> {
             }
         }
         return produtos;
+    }
+
+    public void atualizarEstoque(Integer idProduto, Integer quantidade) {
+
     }
 }

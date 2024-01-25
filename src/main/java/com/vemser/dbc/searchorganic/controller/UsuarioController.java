@@ -7,7 +7,6 @@ import com.vemser.dbc.searchorganic.dto.usuario.UsuarioLoginDTO;
 import com.vemser.dbc.searchorganic.dto.usuario.UsuarioUpdateDTO;
 import com.vemser.dbc.searchorganic.model.Usuario;
 import com.vemser.dbc.searchorganic.service.UsuarioService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@Slf4j
 @RequestMapping("/usuario")
 public class UsuarioController {
     private final UsuarioService usuarioService;
@@ -29,7 +27,6 @@ public class UsuarioController {
 
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> list() throws Exception {
-        log.info("Obtendo usuario");
         List<UsuarioDTO> usuarios = objectMapper.convertValue(this.usuarioService.exibirTodos(), new TypeReference<List<UsuarioDTO>>() {});;
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
