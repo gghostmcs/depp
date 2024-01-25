@@ -30,8 +30,6 @@ public class ProdutoController {
 //    private PropertiesReader propertiesReader;
 
 
-    
-
     @PostMapping //post localhost:8080/produto
     public ResponseEntity<ProdutoDTO> create(@Valid @RequestBody ProdutoCreateDTO produto ) throws Exception {
         ProdutoDTO produtoCriado= produtoService.adicionarProduto(produto);
