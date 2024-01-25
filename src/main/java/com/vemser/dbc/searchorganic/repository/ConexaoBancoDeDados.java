@@ -35,6 +35,7 @@
 package com.vemser.dbc.searchorganic.repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -43,6 +44,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 @Component
+@Slf4j
 public class ConexaoBancoDeDados {
     @Value("${spring.datasource.url}")
     private  final String SERVER;
@@ -61,6 +63,7 @@ public class ConexaoBancoDeDados {
     }
 
     public  Connection getConnection() throws SQLException {
+        log.info(SERVER);
         Connection con = DriverManager.getConnection(SERVER, USER, PASS);
         con.createStatement().execute("alter session set current_schema=" + SCHEMA);
 
