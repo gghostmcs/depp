@@ -10,6 +10,8 @@ import com.vemser.dbc.searchorganic.model.Produto;
 import com.vemser.dbc.searchorganic.service.EmpresaService;
 import com.vemser.dbc.searchorganic.service.ProdutoService;
 import com.vemser.dbc.searchorganic.service.UsuarioService;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -22,18 +24,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/empresa")
+@RequiredArgsConstructor
 public class EmpresaController {
     private final EmpresaService empresaService;
     private final UsuarioService usuarioService;
     private final ObjectMapper objectMapper;
     private final ProdutoService produtoService;
 
-    public EmpresaController(EmpresaService empresaService, UsuarioService usuarioService, ObjectMapper objectMapper, ProdutoService produtoService){
-        this.empresaService = empresaService;
-        this.usuarioService = usuarioService;
-        this.objectMapper = objectMapper;
-        this.produtoService = produtoService;
-    }
 
     @GetMapping("/{idEmpresa}")
     public ResponseEntity<EmpresaDTO> exibirEmpresa(@PathVariable ("idEmpresa") Integer idEmpresa) throws Exception{
