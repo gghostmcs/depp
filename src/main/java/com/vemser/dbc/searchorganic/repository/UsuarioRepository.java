@@ -234,6 +234,8 @@ public class UsuarioRepository implements IRepositoryJDBC<Integer, Usuario> {
                 usuarios.add(usuario);
             }
         } catch (SQLException e) {
+         
+            log.info(e.getMessage());
             throw new BancoDeDadosException(e.getCause());
         } finally {
             try {
